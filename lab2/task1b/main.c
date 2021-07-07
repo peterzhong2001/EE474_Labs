@@ -5,7 +5,7 @@
 // light state machine with 1 system on/off button, 1 pedestrian button, and 3 LEDs.
 
 #include <stdint.h>
-#include "task2.h"
+#include "task1b.h"
 
 // macros for masks
 #define SYS 0x01
@@ -32,7 +32,7 @@ int main() {
         
         case TL_off:
           if (GetButton(SYS)) {
-            TL_State = TL_go;
+            TL_State = TL_stop;
           } else {
             TL_State = TL_off;
           }
@@ -112,6 +112,25 @@ void Init() {
   RedInit();
   YellowInit();
   GreenInit();
+  TimerInit();
+}
+
+void TimerInit() {
+  RCGCTIMER |= RCGCTIMER_0_EN; // Enable timer 0
+  GPTMCTL_0 = 0x0; // Disable timer 0
+  GPTMCFG_0 = CFG_32BIT; // Set 32-bit mode
+  GPTMTAMR_0 |= (TAMR_PERIODIC | TAMR_COUNT_DOWN); // Set timer to periodic and countdown
+  GPTMTAILR_0 = FREQ_1HZ; // Set frequency to 1Hz
+}
+
+void StartTimer() {
+  GPTMCTL_0 = 0x1; // Enable timer 0
+}
+
+void StopAndClearTimer() {
+  GPTMCTL_0 = 0x0; // disable timer 0
+  GPTMICR_0 = 0x01; // clear the TATORIS bit;
+  GPTMICR_0 = 0x00;
 }
 
 void SysInit() {
@@ -129,6 +148,23 @@ void PedInit() {
 }
 unsigned char GetButton(unsigned char sw) {
   return ((GPIODATA_E & sw) != 0);
+  /*
+  // stop timer when button is unpressed
+  if ((GPIODATA_E & sw) == 0) { 
+    StopAndClearTimer();
+    return 0;
+  }
+  // start timer when button is first pressed
+  if (((GPIODATA_E & sw) != 0) && (GPTMCTL_0 == 0x0)) {
+    StartTimer();
+  }
+  // return 1 when at least 2 seconds have passed
+  if (((GPTMRIS_0 & 0x1) != 0) && ((GPIODATA_E & sw) != 0)) { 
+    StopAndClearTimer();
+    return 1;
+  }
+  return 0;
+  */
 }
 
 void RedInit() {
@@ -171,5 +207,22 @@ void GreenOff() {
 }
 
 void Interval() {
-  for (int j = 0; j < 2000000; j++) {}
+  for (int i = 0; i <= 80000000; i++) {
+    if ((GetButton(SYS)) || (GetButton(PED))) { 
+      if (i > 16000000) {
+        return; 
+      }
+    }
+  }
+  /*
+  StartTimer();
+  // ends interval when button is pressed in go state
+  while (!(GPTMRIS_0 & 0x1)) {
+    if ((GetButton(SYS)) || ((GetButton(PED)) && (TL_State == TL_go))) { 
+      StopAndClearTimer();
+      break; 
+    }
+  }
+  StopAndClearTimer();
+*/
 }
