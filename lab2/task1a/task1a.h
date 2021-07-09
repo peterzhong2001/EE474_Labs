@@ -30,7 +30,7 @@
 
 #define GPTMTAMR_0 (*((volatile uint32_t *)0x40030004))
 #define TAMR_PERIODIC 0x0002
-#define TAMR_COUNT_DOWN 0x0010
+#define TAMR_COUNT_DOWN 0x0000
 
 #define GPTMTAILR_0 (*((volatile uint32_t *)0x40030028))
 #define FREQ_1HZ 0xF42400 // 16M in hex

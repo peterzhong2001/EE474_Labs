@@ -1,13 +1,16 @@
 // Peter Zhong
 // 1936889
-// 06/30/2021
-// This is the main program for Lab 1 task 2. This program implements the traffic
+// 07/06/2021
+// This is the main program for Lab 2 task 1 part b. This program implements the traffic
 // light state machine with 1 system on/off button, 1 pedestrian button, and 3 LEDs.
+// The buttons only respond if they are held down for at least 2 seconds. Regular interval
+// between lights is 5 seconds, but that interval can be prematurely ended by either
+// the system button (at all time) or the pedestrian button (when in "go" state).
 
 #include <stdint.h>
 #include "task1b.h"
 
-// macros for masks
+// macros for masks for buttons and LEDs
 #define SYS 0x01
 #define PED 0x02
 #define RED 0x04
@@ -19,9 +22,12 @@ enum TL_States {TL_SMStart, TL_off, TL_go, TL_warn, TL_stop} TL_State;
 int main() {
    volatile unsigned short delay = 0;
    RCGCGPIO |= RCGCGPIO_E_EN;
+   RCGCTIMER |= (RCGCTIMER_0_EN | RCGCTIMER_1_EN); // Enable timer 0 and timer 1
    delay++;
    delay++; // delay for two clock cycles before accessing registers
    Init();
+   ResetTimer0();
+   ResetTimer1();
    
    while (1) {
      // Implementing the state machine
@@ -112,25 +118,35 @@ void Init() {
   RedInit();
   YellowInit();
   GreenInit();
-  TimerInit();
 }
 
-void TimerInit() {
-  RCGCTIMER |= RCGCTIMER_0_EN; // Enable timer 0
+void ResetTimer0() {
   GPTMCTL_0 = 0x0; // Disable timer 0
   GPTMCFG_0 = CFG_32BIT; // Set 32-bit mode
-  GPTMTAMR_0 |= (TAMR_PERIODIC | TAMR_COUNT_DOWN); // Set timer to periodic and countdown
-  GPTMTAILR_0 = FREQ_1HZ; // Set frequency to 1Hz
+  GPTMTAMR_0 |= (TAMR_ONESHOT | TAMR_COUNT_DOWN); // Set timer to oneshot and countdown
+  GPTMTAILR_0 = FREQ_2S; // Set interval to 2s
+}
+void ResetTimer1() {
+  GPTMCTL_1 = 0x0; // Disable timer 1
+  GPTMCFG_1 = CFG_32BIT; // Set 32-bit mode
+  GPTMTAMR_1 |= (TAMR_ONESHOT | TAMR_COUNT_DOWN); // Set timer to periodic and countdown
+  GPTMTAILR_1 = FREQ_5S; // Set interval to 5s
 }
 
-void StartTimer() {
+void StartTimer0() {
   GPTMCTL_0 = 0x1; // Enable timer 0
 }
+void StartTimer1() {
+  GPTMCTL_1 = 0x1; // Enable timer 1
+}
 
-void StopAndClearTimer() {
-  GPTMCTL_0 = 0x0; // disable timer 0
+void ClearFlagTimer0() {
   GPTMICR_0 = 0x01; // clear the TATORIS bit;
   GPTMICR_0 = 0x00;
+}
+void ClearFlagTimer1() {
+  GPTMICR_1 = 0x01; // clear the TATORIS bit;
+  GPTMICR_1 = 0x00;
 }
 
 void SysInit() {
@@ -147,24 +163,16 @@ void PedInit() {
   GPIODEN_E |= PED;    // enable digital function
 }
 unsigned char GetButton(unsigned char sw) {
-  return ((GPIODATA_E & sw) != 0);
-  /*
-  // stop timer when button is unpressed
-  if ((GPIODATA_E & sw) == 0) { 
-    StopAndClearTimer();
-    return 0;
-  }
+  // reset timer when both buttons are unpressed
+  if ((GPIODATA_E & PED) == 0 && ((GPIODATA_E & SYS) == 0)) { 
+    ResetTimer0();
+    ClearFlagTimer0();
   // start timer when button is first pressed
-  if (((GPIODATA_E & sw) != 0) && (GPTMCTL_0 == 0x0)) {
-    StartTimer();
-  }
-  // return 1 when at least 2 seconds have passed
-  if (((GPTMRIS_0 & 0x1) != 0) && ((GPIODATA_E & sw) != 0)) { 
-    StopAndClearTimer();
-    return 1;
-  }
-  return 0;
-  */
+  } else if (GPTMCTL_0 == 0x0) {
+    StartTimer0();
+  } 
+  // return true when the button is pressed and the flag is raised
+  return ((GPIODATA_E & sw) != 0) && (GPTMRIS_0 & 0x01);
 }
 
 void RedInit() {
@@ -207,22 +215,17 @@ void GreenOff() {
 }
 
 void Interval() {
-  for (int i = 0; i <= 80000000; i++) {
-    if ((GetButton(SYS)) || (GetButton(PED))) { 
-      if (i > 16000000) {
-        return; 
-      }
+  ResetTimer1();
+  ClearFlagTimer1();
+  ClearFlagTimer0();
+  StartTimer1();
+  while (!(GPTMRIS_1 & 0x1)) { // wait for either timeout or interruption
+    if ((GetButton(SYS)) || (GetButton(PED) && (TL_State == TL_go))) {
+      ResetTimer1();
+      ClearFlagTimer1();
+      return;
     }
   }
-  /*
-  StartTimer();
-  // ends interval when button is pressed in go state
-  while (!(GPTMRIS_0 & 0x1)) {
-    if ((GetButton(SYS)) || ((GetButton(PED)) && (TL_State == TL_go))) { 
-      StopAndClearTimer();
-      break; 
-    }
-  }
-  StopAndClearTimer();
-*/
+  ResetTimer1();
+  ClearFlagTimer1();
 }

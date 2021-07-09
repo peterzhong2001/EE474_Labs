@@ -25,6 +25,7 @@ int main (void) {
   TimerInit();
   
   while (1) {
+    while (!(GPTMRIS_0 & 0x1)); // interval
     GPTMICR_0 = 0x01; // clear the TATORIS bit;
     GPTMICR_0 = 0x00;
     GPIODATA_N = 0x0; // Turn off port N
@@ -45,8 +46,6 @@ int main (void) {
     GPIODATA_N = LED1MASK; // Turn on LED1
     GPTMICR_0 = 0x01; // clear the TATORIS bit;
     GPTMICR_0 = 0x00;
-    
-    while (!(GPTMRIS_0 & 0x1)); // interval
   }
   return 0;
 }

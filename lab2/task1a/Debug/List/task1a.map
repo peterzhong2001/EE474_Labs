@@ -1,12 +1,12 @@
 ###############################################################################
 #
-# IAR ELF Linker V8.11.3.13950/W32 for ARM                06/Jul/2021  20:27:56
+# IAR ELF Linker V8.11.3.13950/W32 for ARM                08/Jul/2021  18:20:47
 # Copyright 2007-2017 IAR Systems AB.
 #
 #    Output file  =  C:\ee474labs\lab2\task1a\Debug\Exe\task1a.out
 #    Map file     =  C:\ee474labs\lab2\task1a\Debug\List\task1a.map
 #    Command line =  
-#        -f C:\Users\Study\AppData\Local\Temp\EW534A.tmp
+#        -f C:\Users\Study\AppData\Local\Temp\EWD630.tmp
 #        (C:\ee474labs\lab2\task1a\Debug\Obj\main.o -o
 #        C:\ee474labs\lab2\task1a\Debug\Exe\task1a.out --redirect
 #        _Printf=_PrintfFullNoMb --redirect _Scanf=_ScanfFullNoMb --map
