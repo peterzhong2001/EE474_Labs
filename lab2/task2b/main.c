@@ -25,16 +25,20 @@ int main (void) {
   TimerInit();
   
   while (1) {
-    GPTMICR_0 = 0x01; // clear the TATORIS bit;
-    GPTMICR_0 = 0x00;
-    GPIODATA_N |= LED1MASK; // Turn on LED1
-    while (!(GPTMRIS_0 & 0x1)); // interval
-    GPTMICR_0 = 0x01; // clear the TATORIS bit;
-    GPTMICR_0 = 0x00;
-    GPIODATA_N &= !LED1MASK; // Turn off LED1
-    while (!(GPTMRIS_0 & 0x1)); // interval
+    CycleLight();
   }
   return 0;
+}
+
+void CycleLight() {
+  GPTMICR_0 = 0x01; // clear the TATORIS bit;
+  GPTMICR_0 = 0x00;
+  GPIODATA_N |= LED1MASK; // Turn on LED1
+  while (!(GPTMRIS_0 & 0x1)); // interval
+  GPTMICR_0 = 0x01; // clear the TATORIS bit;
+  GPTMICR_0 = 0x00;
+  GPIODATA_N &= !LED1MASK; // Turn off LED1
+  while (!(GPTMRIS_0 & 0x1)); // interval
 }
 
 void GPIOInit() {

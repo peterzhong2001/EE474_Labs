@@ -58,5 +58,7 @@ void GPIOInit();
 void TimerInit();
 // switches' ISR
 void PortJ_Handler();
+// Helper function to cycle through the lights
+void CycleLight();
 
 #endif //__TASK2B_H__
