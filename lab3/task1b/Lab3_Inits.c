@@ -102,5 +102,6 @@ void TimerADCTriger_Init(void) {
   GPTMTAMR_0 |= (TAMR_PERIODIC | TAMR_COUNT_DOWN); // Set timer to periodic and countdown
   GPTMTAILR_0 = FREQ_1HZ; // Set frequency to 1Hz
   GPTMADCEV_0 |= TATOADCEN; // enable trigger on timeout event
+  GPTMCC_0 = 0x1; // set the clock source to alternate clock
   GPTMCTL_0 |= 0x1; // Enable timer 0
 }

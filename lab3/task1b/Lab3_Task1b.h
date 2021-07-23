@@ -82,4 +82,6 @@
 #define GPTMADCEV_0 (*((volatile uint32_t *)0x40030070))
 #define TATOADCEN 0x1
 
+#define GPTMCC_0 (*((volatile uint32_t *)0x40030FC8))
+
 #endif //__LAB3_TASK1B_H__

@@ -35,9 +35,9 @@ void ADC0SS3_Handler(void) {
 void PortJ_Handler(void) {
    GPIOICR_J |= 0x3; // Clear Port J interruption
   enum frequency freq = PRESET2;
-  if (GPIODATA_J == SW2MASK) {
+  if (GPIODATA_J == SW1MASK) {
     freq = PRESET3; // 12 MHz
-  } else if (GPIODATA_J == SW1MASK) {
+  } else if (GPIODATA_J == SW2MASK) {
     freq = PRESET1; // 120 MHz
   }
   PLL_Init(freq);
