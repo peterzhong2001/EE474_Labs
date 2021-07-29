@@ -1,0 +1,364 @@
+###############################################################################
+#
+# IAR ELF Linker V8.11.3.13950/W32 for ARM                29/Jul/2021  11:52:34
+# Copyright 2007-2017 IAR Systems AB.
+#
+#    Output file  =  C:\ee474labs\lab4\task1c\Debug\Exe\task1c.out
+#    Map file     =  C:\ee474labs\lab4\task1c\Debug\List\task1c.map
+#    Command line =  
+#        -f C:\Users\Study\AppData\Local\Temp\EW5A33.tmp
+#        (C:\ee474labs\lab4\task1c\Debug\Obj\cstartup_M.o
+#        C:\ee474labs\lab4\task1c\Debug\Obj\Lab3_Inits.o
+#        C:\ee474labs\lab4\task1c\Debug\Obj\Lab4_Task1c.o
+#        C:\ee474labs\lab4\task1c\Debug\Obj\SSD2119_Display.o
+#        C:\ee474labs\lab4\task1c\Debug\Obj\SSD2119_Touch.o -o
+#        C:\ee474labs\lab4\task1c\Debug\Exe\task1c.out --redirect
+#        _Printf=_PrintfFullNoMb --redirect _Scanf=_ScanfFullNoMb --map
+#        C:\ee474labs\lab4\task1c\Debug\List\task1c.map --config "C:\Program
+#        Files (x86)\IAR Systems\Embedded Workbench
+#        8.0\arm\config\linker\TexasInstruments\TM4C1294NC.icf" --semihosting
+#        --entry __iar_program_start --vfe --text_out locale)
+#
+###############################################################################
+
+*******************************************************************************
+*** RUNTIME MODEL ATTRIBUTES
+***
+
+CppFlavor       = *
+__SystemLibrary = DLib
+__dlib_version  = 6
+
+
+*******************************************************************************
+*** HEAP SELECTION
+***
+
+The basic heap was selected because some modules are built with
+size limitations (and not runtime checking), and --advanced_heap
+was not specified.
+
+
+*******************************************************************************
+*** PLACEMENT SUMMARY
+***
+
+"A0":  place at 0x00000000 { ro section .intvec };
+"P1":  place in [from 0x00000000 to 0x000fffff] { ro };
+define block CSTACK with size = 32K, alignment = 8 { };
+define block HEAP with size = 64K, alignment = 8 { };
+"P2":  place in [from 0x20000000 to 0x2003ffff] {
+          rw, block CSTACK, block HEAP };
+initialize by copy { rw };
+
+  Section            Kind        Address    Size  Object
+  -------            ----        -------    ----  ------
+"A0":                                      0x110
+  .intvec            const    0x00000000   0x110  cstartup_M.o [1]
+                            - 0x00000110   0x110
+
+"P1":                                     0x3000
+  .text              ro code  0x00000110   0xe0e  xprintffull_nomb.o [3]
+  .text              ro code  0x00000f1e     0xa  xsprout.o [3]
+  .text              ro code  0x00000f28    0x16  strchr.o [5]
+  .text              ro code  0x00000f3e     0x2  cstartup_M.o [1]
+  .text              ro code  0x00000f40    0x44  xfail_s.o [3]
+  .text              ro code  0x00000f84    0x36  strlen.o [5]
+  .text              ro code  0x00000fba     0x2  cstartup_M.o [1]
+  .text              ro code  0x00000fbc    0x58  memchr.o [5]
+  .text              ro code  0x00001014    0xee  I64DivMod.o [5]
+  .text              ro code  0x00001102     0x2  cstartup_M.o [1]
+  .text              ro code  0x00001104   0x1a2  DblMul.o [4]
+  .text              ro code  0x000012a6     0x2  cstartup_M.o [1]
+  .text              ro code  0x000012a8    0x76  ABImemcpy_unaligned.o [5]
+  .text              ro code  0x0000131e     0x2  cstartup_M.o [1]
+  .text              ro code  0x00001320    0x70  frexp.o [4]
+  .text              ro code  0x00001390    0x2e  DblCmpLe.o [4]
+  .text              ro code  0x000013be     0x2  cstartup_M.o [1]
+  .text              ro code  0x000013c0    0x2e  DblCmpGe.o [4]
+  .text              ro code  0x000013ee     0x2  cstartup_M.o [1]
+  .text              ro code  0x000013f0   0x13a  ldexp.o [4]
+  .text              ro code  0x0000152a     0x2  cstartup_M.o [1]
+  .text              ro code  0x0000152c    0x3a  DblToS32.o [4]
+  .text              ro code  0x00001566     0x2  cstartup_M.o [1]
+  .text              ro code  0x00001568    0x22  S32ToDbl.o [4]
+  .text              ro code  0x0000158c    0xe2  DblSub.o [4]
+  .text              ro code  0x00001670   0x246  DblDiv.o [4]
+  .text              ro code  0x000018b8    0x28  DblToU32.o [4]
+  .text              ro code  0x000018e0    0x1a  U32ToDbl.o [4]
+  .text              ro code  0x000018fc     0x8  xlocale_c.o [3]
+  .text              ro code  0x00001904     0x6  abort.o [3]
+  .text              ro code  0x0000190c     0x2  I64DivZer.o [5]
+  .text              ro code  0x00001910   0x168  DblAdd.o [4]
+  .text              ro code  0x00001a78    0x14  exit.o [6]
+  .text              ro code  0x00001a8c   0x90c  SSD2119_Display.o [1]
+  .text              ro code  0x00002398    0x48  FltToDbl.o [4]
+  .text              ro code  0x000023e0    0x40  sprintf.o [3]
+  .text              ro code  0x00002420   0x3c4  SSD2119_Touch.o [1]
+  .text              ro code  0x000027e4   0x33c  Lab3_Inits.o [1]
+  .text              ro code  0x00002b20   0x228  Lab4_Task1c.o [1]
+  .text              ro code  0x00002d48    0x68  DblToFlt.o [4]
+  .rodata            const    0x00002db0   0x1e0  SSD2119_Display.o [1]
+  .text              ro code  0x00002f90    0x38  packbits_init_single.o [5]
+  .text              ro code  0x00002fc8    0x28  data_init.o [5]
+  .text              ro code  0x00002ff0    0x22  fpinit_M.o [4]
+  .iar.init_table    const    0x00003014    0x10  - Linker created -
+  .rodata            const    0x00003024    0x20  Lab4_Task1c.o [1]
+  .rodata            const    0x00003044    0x20  SSD2119_Display.o [1]
+  .rodata            const    0x00003064    0x1c  Lab4_Task1c.o [1]
+  .text              ro code  0x00003080    0x1a  cmain.o [5]
+  .text              ro code  0x0000309a     0x4  low_level_init.o [3]
+  .text              ro code  0x0000309e     0x4  exit.o [3]
+  .text              ro code  0x000030a4     0xa  cexit.o [5]
+  .text              ro code  0x000030ae    0x10  cstartup_M.o [1]
+  .rodata            const    0x000030c0     0xc  Lab4_Task1c.o [1]
+  .rodata            const    0x000030cc     0x8  Lab4_Task1c.o [1]
+  .rodata            const    0x000030d4     0x8  Lab4_Task1c.o [1]
+  .rodata            const    0x000030dc     0x4  xlocale_c.o [3]
+  .rodata            const    0x000030e0     0x0  packbits_init_single.o [5]
+  Initializer bytes  const    0x000030e0    0x30  <for P2-1>
+                            - 0x00003110  0x3000
+
+"P2", part 1 of 2:                          0x4b
+  P2-1                        0x20000000    0x4b  <Init block>
+    .data            inited   0x20000000    0x38  xlocale_c.o [3]
+    .bss             inited   0x20000038     0x4  Lab4_Task1c.o [1]
+    .bss             inited   0x2000003c     0x4  Lab4_Task1c.o [1]
+    .bss             inited   0x20000040     0x4  xfail_s.o [3]
+    .bss             inited   0x20000044     0x2  SSD2119_Display.o [1]
+    .bss             inited   0x20000046     0x2  SSD2119_Display.o [1]
+    .bss             inited   0x20000048     0x2  SSD2119_Display.o [1]
+    .bss             inited   0x2000004a     0x1  Lab4_Task1c.o [1]
+                            - 0x2000004b    0x4b
+
+"P2", part 2 of 2:                        0x8000
+  CSTACK                      0x20000050  0x8000  <Block>
+    CSTACK           uninit   0x20000050  0x8000  <Block tail>
+                            - 0x20008050  0x8000
+
+
+*******************************************************************************
+*** INIT TABLE
+***
+
+          Address     Size
+          -------     ----
+Copy/packbits (__iar_packbits_init_single3)
+    1 source range, total size 0x30 (64% of destination):
+          0x000030e0  0x30
+    1 destination range, total size 0x4b:
+          0x20000000  0x4b
+
+
+
+*******************************************************************************
+*** MODULE SUMMARY
+***
+
+    Module                  ro code  ro data  rw data
+    ------                  -------  -------  -------
+C:\ee474labs\lab4\task1c\Debug\Obj: [1]
+    Lab3_Inits.o                828
+    Lab4_Task1c.o               552       94        9
+    SSD2119_Display.o         2 316      516        6
+    SSD2119_Touch.o             964
+    cstartup_M.o                 34      272
+    -------------------------------------------------
+    Total:                    4 694      882       15
+
+command line: [2]
+    -------------------------------------------------
+    Total:
+
+dl7M_tlf.a: [3]
+    abort.o                       6
+    exit.o                        4
+    low_level_init.o              4
+    sprintf.o                    64
+    xfail_s.o                    68        3        4
+    xlocale_c.o                   8       39       56
+    xprintffull_nomb.o        3 598
+    xsprout.o                    10
+    -------------------------------------------------
+    Total:                    3 762       42       60
+
+m7M_tls.a: [4]
+    DblAdd.o                    360
+    DblCmpGe.o                   46
+    DblCmpLe.o                   46
+    DblDiv.o                    582
+    DblMul.o                    418
+    DblSub.o                    226
+    DblToFlt.o                  104
+    DblToS32.o                   58
+    DblToU32.o                   40
+    FltToDbl.o                   72
+    S32ToDbl.o                   34
+    U32ToDbl.o                   26
+    fpinit_M.o                   34
+    frexp.o                     112
+    ldexp.o                     314
+    -------------------------------------------------
+    Total:                    2 472
+
+rt7M_tl.a: [5]
+    ABImemcpy_unaligned.o       118
+    I64DivMod.o                 238
+    I64DivZer.o                   2
+    cexit.o                      10
+    cmain.o                      26
+    data_init.o                  40
+    memchr.o                     88
+    packbits_init_single.o       56
+    strchr.o                     22
+    strlen.o                     54
+    -------------------------------------------------
+    Total:                      654
+
+shb_l.a: [6]
+    exit.o                       20
+    -------------------------------------------------
+    Total:                       20
+
+    Gaps                         14        4
+    Linker created                        16   32 768
+-----------------------------------------------------
+    Grand Total:             11 616      944   32 843
+
+
+*******************************************************************************
+*** ENTRY LIST
+***
+
+Entry                      Address   Size  Type      Object
+-----                      -------   ----  ----      ------
+.iar.init_table$$Base   0x00003014          --   Gb  - Linker created -
+.iar.init_table$$Limit  0x00003024          --   Gb  - Linker created -
+?main                   0x00003081         Code  Gb  cmain.o [5]
+ADC0SS3_Handler         0x00002ca9   0x20  Code  Gb  Lab4_Task1c.o [1]
+ADCReadPot_Init         0x000029bd   0x88  Code  Gb  Lab3_Inits.o [1]
+ADC_Init                0x0000248f   0x96  Code  Lc  SSD2119_Touch.o [1]
+ADC_Read                0x00002525   0x1e  Code  Lc  SSD2119_Touch.o [1]
+ADC_SetChannel          0x00002543   0x32  Code  Lc  SSD2119_Touch.o [1]
+ADC_value               0x20000038    0x4  Data  Gb  Lab4_Task1c.o [1]
+ASCII                   0x00002db0  0x1e0  Data  Lc  SSD2119_Display.o [1]
+CSTACK$$Base            0x20000050          --   Gb  - Linker created -
+CSTACK$$Limit           0x20008050          --   Gb  - Linker created -
+Color4                  0x00003044   0x20  Data  Gb  SSD2119_Display.o [1]
+LCD_DrawFilledRect      0x00002325   0x60  Code  Gb  SSD2119_Display.o [1]
+LCD_DrawPixel           0x000022f1   0x34  Code  Gb  SSD2119_Display.o [1]
+LCD_GPIOInit            0x00001a8d  0x19c  Code  Lc  SSD2119_Display.o [1]
+LCD_Init                0x00001f21  0x1a2  Code  Gb  SSD2119_Display.o [1]
+LCD_PrintChar           0x000020e3   0xd0  Code  Gb  SSD2119_Display.o [1]
+LCD_PrintFloat          0x00002251   0x1e  Code  Gb  SSD2119_Display.o [1]
+LCD_PrintInteger        0x000021f1   0x60  Code  Gb  SSD2119_Display.o [1]
+LCD_PrintString         0x000021b3   0x1c  Code  Gb  SSD2119_Display.o [1]
+LCD_SetCursor           0x000021cf    0xe  Code  Gb  SSD2119_Display.o [1]
+LCD_SetTextColor        0x000021dd   0x14  Code  Gb  SSD2119_Display.o [1]
+LCD_WriteCommand        0x00001c29  0x15a  Code  Lc  SSD2119_Display.o [1]
+LCD_WriteData           0x00001d83  0x19e  Code  Lc  SSD2119_Display.o [1]
+LeftButton              0x00002c7d   0x16  Code  Gb  Lab4_Task1c.o [1]
+LoadInt                 0x000002af   0x7a  Code  Lc  xprintffull_nomb.o [3]
+PLL_Init                0x000027e5  0x150  Code  Gb  Lab3_Inits.o [1]
+PortJ_Handler           0x00002cc9   0x3c  Code  Gb  Lab4_Task1c.o [1]
+Region$$Table$$Base     0x00003014          --   Gb  - Linker created -
+Region$$Table$$Limit    0x00003024          --   Gb  - Linker created -
+RightButton             0x00002c93   0x16  Code  Gb  Lab4_Task1c.o [1]
+SW_Init                 0x00002935   0x88  Code  Gb  Lab3_Inits.o [1]
+TimerADCTriger_Init     0x00002a45   0x56  Code  Gb  Lab3_Inits.o [1]
+Touch_Init              0x00002421   0x6e  Code  Gb  SSD2119_Touch.o [1]
+Touch_ReadX             0x0000266b   0xf6  Code  Gb  SSD2119_Touch.o [1]
+Touch_ReadY             0x00002575   0xf6  Code  Gb  SSD2119_Touch.o [1]
+_GenldFullNoMb          0x00000c13  0x27e  Code  Lc  xprintffull_nomb.o [3]
+_LdtobFullNoMb          0x000007f7  0x3f0  Code  Lc  xprintffull_nomb.o [3]
+_LitobFullNoMb          0x0000069b  0x116  Code  Lc  xprintffull_nomb.o [3]
+_Locale_lconv           0x20000000   0x38  Data  Lc  xlocale_c.o [3]
+_PrintfFullNoMb         0x00000111  0x190  Code  Gb  xprintffull_nomb.o [3]
+_PutcharsFullNoMb       0x00000e91   0x2e  Code  Lc  xprintffull_nomb.o [3]
+_PutfldFullNoMb         0x00000329  0x264  Code  Lc  xprintffull_nomb.o [3]
+_PuttxtFullNoMb         0x0000058d  0x10e  Code  Lc  xprintffull_nomb.o [3]
+_SProut                 0x00000f1f    0xa  Code  Gb  xsprout.o [3]
+__aeabi_cdcmple         0x00001391         Code  Gb  DblCmpLe.o [4]
+__aeabi_cdrcmple        0x000013c1         Code  Gb  DblCmpGe.o [4]
+__aeabi_d2f             0x00002d49         Code  Gb  DblToFlt.o [4]
+__aeabi_d2iz            0x0000152d         Code  Gb  DblToS32.o [4]
+__aeabi_d2uiz           0x000018b9         Code  Gb  DblToU32.o [4]
+__aeabi_ddiv            0x00001671         Code  Gb  DblDiv.o [4]
+__aeabi_dmul            0x00001105         Code  Gb  DblMul.o [4]
+__aeabi_dsub            0x0000158d         Code  Gb  DblSub.o [4]
+__aeabi_f2d             0x00002399         Code  Gb  FltToDbl.o [4]
+__aeabi_i2d             0x00001569         Code  Gb  S32ToDbl.o [4]
+__aeabi_ldiv0           0x0000190d         Code  Gb  I64DivZer.o [5]
+__aeabi_ui2d            0x000018e1         Code  Gb  U32ToDbl.o [4]
+__aeabi_uldivmod        0x00001015         Code  Gb  I64DivMod.o [5]
+__cmain                 0x00003081         Code  Gb  cmain.o [5]
+__exit                  0x00001a79   0x14  Code  Gb  exit.o [6]
+__iar_Fail_s            0x00000f41   0x1e  Code  Gb  xfail_s.o [3]
+__iar_Memchr            0x00000fbd         Code  Gb  memchr.o [5]
+__iar_Strchr            0x00000f29         Code  Gb  strchr.o [5]
+__iar_dadd              0x0000159d         Code  Gb  DblSub.o [4]
+__iar_data_init3        0x00002fc9   0x28  Code  Gb  data_init.o [5]
+__iar_dsub              0x00001911         Code  Gb  DblAdd.o [4]
+__iar_dsubStart         0x00001923         Code  Gb  DblAdd.o [4]
+__iar_frexp             0x0000132d         Code  Gb  frexp.o [4]
+__iar_frexpl            0x0000132d         Code  Gb  frexp.o [4]
+__iar_init_vfp          0x00002ff1         Code  Gb  fpinit_M.o [4]
+__iar_ldexp64           0x000013f1         Code  Gb  ldexp.o [4]
+__iar_packbits_init_single3
+                        0x00002f91   0x38  Code  Gb  packbits_init_single.o [5]
+__iar_program_start     0x000030af   0x10  Code  Gb  cstartup_M.o [1]
+__iar_scalbln64         0x000013f1         Code  Gb  ldexp.o [4]
+__iar_scalbn64          0x000013f1         Code  Gb  ldexp.o [4]
+__iar_softfp___iar_frexp64
+                        0x00001321         Code  Gb  frexp.o [4]
+__iar_softfp_frexp      0x00001321         Code  Gb  frexp.o [4]
+__iar_softfp_frexpl     0x00001321         Code  Gb  frexp.o [4]
+__iar_systems$$module {Abs}
+                        0x00000001         Data  Gb  command line/config [2]
+__iar_unaligned_memcpy  0x000012a9         Code  Gb  ABImemcpy_unaligned.o [5]
+__iar_unaligned_memcpy4
+                        0x000012c9         Code  Gb  ABImemcpy_unaligned.o [5]
+__iar_unaligned_memcpy8
+                        0x000012c9         Code  Gb  ABImemcpy_unaligned.o [5]
+__low_level_init        0x0000309b    0x4  Code  Gb  low_level_init.o [3]
+__vector_table          0x00000000  0x110  Data  Gb  cstartup_M.o [1]
+_call_main              0x0000308d         Code  Gb  cmain.o [5]
+_exit                   0x000030a5         Code  Gb  cexit.o [5]
+_main                   0x00003097         Code  Gb  cmain.o [5]
+abort                   0x00001905    0x6  Code  Gb  abort.o [3]
+convertColor            0x000020c3   0x20  Code  Gb  SSD2119_Display.o [1]
+cursorX                 0x20000044    0x2  Data  Gb  SSD2119_Display.o [1]
+cursorY                 0x20000046    0x2  Data  Gb  SSD2119_Display.o [1]
+exit                    0x0000309f    0x4  Code  Gb  exit.o [3]
+freq                    0x2000004a    0x1  Data  Gb  Lab4_Task1c.o [1]
+ldexp                   0x000013f1         Code  Gb  ldexp.o [4]
+ldexpl                  0x000013f1         Code  Gb  ldexp.o [4]
+localeconv              0x000018fd    0x4  Code  Gb  xlocale_c.o [3]
+main                    0x00002b21  0x15c  Code  Gb  Lab4_Task1c.o [1]
+memchr                  0x00000fbd         Code  Gb  memchr.o [5]
+scalbln                 0x000013f1         Code  Gb  ldexp.o [4]
+scalblnl                0x000013f1         Code  Gb  ldexp.o [4]
+scalbn                  0x000013f1         Code  Gb  ldexp.o [4]
+scalbnl                 0x000013f1         Code  Gb  ldexp.o [4]
+scale                   0x000007b1   0x46  Code  Lc  xprintffull_nomb.o [3]
+sec_hand                0x20000040    0x4  Data  Lc  xfail_s.o [3]
+sprintf                 0x000023e1   0x40  Code  Gb  sprintf.o [3]
+strchr                  0x00000f29         Code  Gb  strchr.o [5]
+strlen                  0x00000f85         Code  Gb  strlen.o [5]
+textColor               0x20000048    0x2  Data  Gb  SSD2119_Display.o [1]
+updateTemp              0x2000003c    0x4  Data  Gb  Lab4_Task1c.o [1]
+
+
+[1] = C:\ee474labs\lab4\task1c\Debug\Obj
+[2] = command line
+[3] = dl7M_tlf.a
+[4] = m7M_tls.a
+[5] = rt7M_tl.a
+[6] = shb_l.a
+
+  11 616 bytes of readonly  code memory
+     944 bytes of readonly  data memory
+  32 843 bytes of readwrite data memory
+
+Errors: none
+Warnings: none

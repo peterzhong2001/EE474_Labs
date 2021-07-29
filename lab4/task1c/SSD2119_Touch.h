@@ -1,3 +1,9 @@
+// Peter Zhong
+// 1936889
+// 07/28/2021
+// This is the header file containing all LCD touch functions for lab 4. It is provided
+// as the starter code to the lab.
+
 /*********************************************************************
  * SSD2119_Touch.h
  * The header file of the SSD2119 touchpad driver.

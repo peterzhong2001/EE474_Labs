@@ -1,3 +1,9 @@
+// Peter Zhong
+// 1936889
+// 07/28/2021
+// This is the file containing all LCD touch functions for lab 4. It is provided
+// as the starter code to the lab.
+
 /*********************************************************************
  * SSD2119_Touch.c
  * Runs on the EK-TM4C1294XL Connected LaunchPad.
