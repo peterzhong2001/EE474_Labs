@@ -119,11 +119,6 @@ int main() {
   return 0;
 }
 
-void Init() {
-  LCD_Init();
-  DrawInterface();
-}
-
 void DrawInterface() {
   LCD_DrawCircle(60, 50, 20, Color4[12]); // red light border
   LCD_DrawCircle(60, 120, 20, Color4[14]); // yellow light border

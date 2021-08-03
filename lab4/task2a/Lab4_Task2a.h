@@ -63,23 +63,21 @@ void DrawInterface();
 // 2 seconds.
 unsigned char GetButton(char sw);
 
+// Helper functions for detecting virtual button presses
 bool SysPressed();
 bool PedPressed();
 
-// Helper functions for red LED at PE2: initialize, on, and off
+// Helper functions for red light on and off
 void RedOn();
 void RedOff();
 
-// Helper functions for yellow LED at PE3: initialize, on, and off
+// Helper functions for yellow light on and off
 void YellowOn();
 void YellowOff();
 
-// Helper functions for green LED at PE5: initialize, on, and off
+// Helper functions for green light on and off
 void GreenOn();
 void GreenOff();
-
-// Overall initialize function
-void Init();
 
 // 5-second interval between states. Can only be prematurely ended when either
 // the system button is pressed for at least 2 seconds or the pedestrian button
