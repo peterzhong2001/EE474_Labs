@@ -1,11 +1,15 @@
 // Peter Zhong
 // 1936889
-// 07/06/2021
-// This is the main program for Lab 2 task 1 part b. This program implements the traffic
+// 08/03/2021
+// This is the main program for Lab 4 task 2 part a. This program implements the traffic
 // light state machine with 1 system on/off button, 1 pedestrian button, and 3 LEDs.
+// All buttons are virtually displayed on the LCD screen.
 // The buttons only respond if they are held down for at least 2 seconds. Regular interval
 // between lights is 5 seconds, but that interval can be prematurely ended by either
 // the system button (at all time) or the pedestrian button (when in "go" state).
+
+// Most of the code is copied from lab 2. Some functions are modified for the program
+// so that it can be run on a LCD display.
 
 #include "SSD2119_Display.h"
 #include "SSD2119_Touch.h"
@@ -22,7 +26,6 @@ enum TL_States {TL_SMStart, TL_off, TL_go, TL_warn, TL_stop} TL_State;
 int main() {
    volatile unsigned short delay = 0;
    PLL_Init(PRESET2); // 60M clock
-   RCGCGPIO |= RCGCGPIO_E_EN;
    RCGCTIMER |= (RCGCTIMER_0_EN | RCGCTIMER_1_EN); // Enable timer 0 and timer 1
    delay++;
    delay++; // delay for two clock cycles before accessing registers
@@ -133,6 +136,7 @@ void DrawInterface() {
 unsigned char GetButton(char sw) {
   // reset timer when both buttons are unpressed
   if (!SysPressed() && !PedPressed()) { 
+    printf("Timer Cleared\n");
     ResetTimer0();
     ClearFlagTimer0();
   // start timer when button is first pressed
@@ -153,17 +157,15 @@ unsigned char GetButton(char sw) {
 }
 
 bool SysPressed() {
-  int X = (Touch_ReadX() - 700) * 320 / 1400;
-  int Y = (Touch_ReadY() - 700) * 240 / 820;
-  return ((X >= 150) && (X <= 250) && (Y >= 30) && (Y <= 100));
+  unsigned long X = Touch_ReadX();
+  unsigned long Y = Touch_ReadY();
+  return ((X >= 1550) && (X <= 1960) && (Y >= 695) && (Y <= 1080));
 }
 
 bool PedPressed() {
-  int X = (Touch_ReadX() - 700) * 320 / 1400;
-  int Y = (Touch_ReadY() - 700) * 240 / 820;
-  printf("%d\n", X);
-  printf("%d\n\n", Y);
-  return ((X >= 150) && (X <= 250) && (Y >= 140) && (Y <= 210));
+  unsigned long X = Touch_ReadX();
+  unsigned long Y = Touch_ReadY();
+  return ((X >= 1550) && (X <= 1960) && (Y >= 1200) && (Y <= 1500));
 }
 
 void Interval() {

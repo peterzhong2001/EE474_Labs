@@ -1,25 +1,17 @@
 // Peter Zhong
 // 1936889
-// 07/06/2021
-// This is the header file for Lab 2 task 1 part b. It includes macros to memory
-// addresses for GPIO port E and definitions of helper methods for task 2.
+// 08/03/2021
+// This is the header file for Lab 4 task 2 part a. It includes macros to access timer 0A
+// and timer 1A, and it also defines the helper methods for the main file.
+// Most of the file is copied from lab 2, with some modifications of helper methods and removal
+// of GPIO macros.
 
-#ifndef __TASK1B_H__
-#define __TASK1B_H__
+#ifndef __TASK2A_H__
+#define __TASK2A_H__
 
 #include <stdbool.h>
 #include <stdint.h>
 #include <stdio.h>
-
-// macros for accessing GPIO ports
-#define RCGCGPIO (*((volatile uint32_t *)0x400FE608))
-#define RCGCGPIO_E_EN 0x00000010
-
-#define GPIOAMSEL_E (*((volatile uint32_t *)0x4005C528))
-#define GPIOAFSEL_E (*((volatile uint32_t *)0x4005C420))
-#define GPIODIR_E (*((volatile uint32_t *)0x4005C400))
-#define GPIODEN_E (*((volatile uint32_t *)0x4005C51C))
-#define GPIODATA_E (*((volatile uint32_t *)0x4005C3FC))
 
 // macros for accessing Timer 0A and Timer 1A
 #define RCGCTIMER (*((volatile uint32_t *)0x400FE604))
@@ -95,4 +87,4 @@ void Init();
 // is pressed for at least 2 seconds in the go state
 void Interval();
 
-#endif //__TASK2_H__
+#endif //__TASK2A_H__

@@ -9,5 +9,8 @@
     <project>
         <path>$WS_DIR$\task1c\task1c.ewp</path>
     </project>
+    <project>
+        <path>$WS_DIR$\task2a\task2a.ewp</path>
+    </project>
     <batchBuild />
 </workspace>
