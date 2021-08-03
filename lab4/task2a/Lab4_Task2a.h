@@ -11,7 +11,6 @@
 
 #include <stdbool.h>
 #include <stdint.h>
-#include <stdio.h>
 
 // macros for accessing Timer 0A and Timer 1A
 #define RCGCTIMER (*((volatile uint32_t *)0x400FE604))

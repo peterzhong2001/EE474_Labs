@@ -26,14 +26,14 @@ enum TL_States {TL_SMStart, TL_off, TL_go, TL_warn, TL_stop} TL_State;
 int main() {
    volatile unsigned short delay = 0;
    PLL_Init(PRESET2); // 60M clock
+   PLLFREQ0 |= 0x00800000; // Power up the PLL
+   while (PLLSTAT != 0x1); // Wait for PLL to lock
    RCGCTIMER |= (RCGCTIMER_0_EN | RCGCTIMER_1_EN); // Enable timer 0 and timer 1
    delay++;
    delay++; // delay for two clock cycles before accessing registers
    LCD_Init();
    Touch_Init();
    DrawInterface();
-   GPTMCC_0 = 0x1; // set clock to alternate clock source
-   GPTMCC_1 = 0x1; // set clock to alternate clock source
    ResetTimer0();
    ResetTimer1();
    while (1) {
@@ -136,20 +136,16 @@ void DrawInterface() {
 unsigned char GetButton(char sw) {
   // reset timer when both buttons are unpressed
   if (!SysPressed() && !PedPressed()) { 
-    printf("Timer Cleared\n");
     ResetTimer0();
     ClearFlagTimer0();
   // start timer when button is first pressed
   } else if ((GPTMCTL_0 == 0x0) && !(GPTMRIS_0 & 0x01)) {
-    printf("Timer Started\n");
     StartTimer0();
   }
   // return when both button is pressed and timer is up
   if (sw == SYS) {
-    printf("%s\n", (SysPressed() && (GPTMRIS_0 & 0x01)) ? "system timer up" : "waiting");
     return (SysPressed() && (GPTMRIS_0 & 0x1));
   } else if (sw == PED) {
-    printf("%s\n", (PedPressed() && (GPTMRIS_0 & 0x01)) ? "ped timer up" : "waiting");
     return (PedPressed() && (GPTMRIS_0 & 0x1));
   } else {
     return 0;
